@@ -51,13 +51,20 @@ class HomeSectionPage extends StatelessWidget {
   }
 }
 
-class SinglePost extends StatelessWidget {
+class SinglePost extends StatefulWidget {
   final int index;
   const SinglePost({
     Key? key,
     required this.index,
   }) : super(key: key);
 
+  @override
+  State<SinglePost> createState() => _SinglePostState();
+}
+
+class _SinglePostState extends State<SinglePost> {
+  bool like = false;
+  int number = 0;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -74,13 +81,13 @@ class SinglePost extends StatelessWidget {
           children: [
             ListTile(
               leading: CircleAvatar(
-                backgroundImage: AssetImage(posts[index]['image']),
+                backgroundImage: AssetImage(posts[widget.index]['image']),
               ),
               title: Text(
-                posts[index]['name'],
+                posts[widget.index]['name'],
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              subtitle: Text(posts[index]['time']),
+              subtitle: Text(posts[widget.index]['time']),
               trailing: Icon(Icons.more_vert),
             ),
             Padding(
@@ -97,8 +104,8 @@ class SinglePost extends StatelessWidget {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(posts[index]['postimage'] != null
-                          ? posts[index]['postimage']
+                      image: AssetImage(posts[widget.index]['postimage'] != null
+                          ? posts[widget.index]['postimage']
                           : 'assets/images/food11.jpg'),
                       fit: BoxFit.cover),
                 ),
@@ -109,11 +116,29 @@ class SinglePost extends StatelessWidget {
               padding: const EdgeInsets.all(15.0),
               child: Row(
                 children: [
-                  Icon(Icons.favorite, color: Colors.red),
+                  GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          like = !like;
+                          if (like == true) {
+                            number += 1;
+                          }
+                        });
+                      },
+                      child: Icon(
+                          like != false
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          color: Colors.red)),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(number.toString()),
                   Spacer(),
                   GestureDetector(
                     onTap: () {
                       showDialog(
+                          barrierDismissible: false,
                           context: context,
                           builder: (context) {
                             return AlertDialog(

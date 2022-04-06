@@ -1,7 +1,7 @@
 import 'package:centric_support_machine_test/constants/constant.dart';
 import 'package:centric_support_machine_test/pages/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SignUpPage extends StatelessWidget {
